@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "identifier": "com.ahv.pulse",
   "build": {
-    "frontendDist": "../src"
+    "frontendDist": "../src",
+    "devUrl": "http://localhost:1420",
+    "beforeDevCommand": "",
+    "beforeBuildCommand": ""
   },
   "app": {
     "windows": [
@@ -12,7 +15,10 @@
         "width": 1200,
         "height": 800
       }
-    ]
+    ],
+    "security": {
+      "csp": "default-src 'self' https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:"
+    }
   },
   "bundle": {
     "active": true,
@@ -22,6 +28,7 @@
     ],
     "icon": [
       "icons/icon.png"
-    ]
+    ],
+    "category": "Productivity"
   }
 }
