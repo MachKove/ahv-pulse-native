@@ -1,5 +1,5 @@
 @echo off
 npm install
-npx tauri build
-echo DONE - look in src-tauri\target\release\bundle\
+npm run dist
+echo DONE - look in dist\ folder
 pause

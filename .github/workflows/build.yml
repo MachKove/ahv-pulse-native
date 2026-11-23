@@ -5,15 +5,12 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
       - uses: actions/setup-node@v4
         with: {node-version: 22}
       - run: npm install
-      - run: npx tauri --version
-      - run: npx tauri build
+      - run: npm run dist
       - uses: actions/upload-artifact@v4
-        if: always()
-        with: {name: AHV-PULSE-Windows-EXE-MSI, path: src-tauri/target/release/bundle/, if-no-files-found: warn}
+        with: {name: AHV-PULSE-Windows-EXE, path: dist/*}
   android:
     runs-on: ubuntu-latest
     steps:
@@ -24,9 +21,8 @@ jobs:
         with: {distribution: temurin, java-version: '17'}
       - uses: android-actions/setup-android@v3
       - run: npm install
-      - run: npx cap add android || true
+      - run: npx cap add android
       - run: npx cap sync android
       - run: cd android && ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
-        if: always()
-        with: {name: AHV-PULSE-Android-APK, path: android/app/build/outputs/apk/debug/*.apk, if-no-files-found: warn}
+        with: {name: AHV-PULSE-Android-APK, path: android/app/build/outputs/apk/debug/*.apk}
