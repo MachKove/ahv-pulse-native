@@ -1,0 +1,27 @@
+{
+  "productName": "AHV PULSE",
+  "version": "1.0.0",
+  "identifier": "com.ahv.pulse",
+  "build": {
+    "frontendDist": "../src"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "AHV PULSE",
+        "width": 1200,
+        "height": 800
+      }
+    ]
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "msi",
+      "nsis"
+    ],
+    "icon": [
+      "icons/icon.png"
+    ]
+  }
+}
