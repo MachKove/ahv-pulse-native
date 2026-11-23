@@ -5,8 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --win --x64",
-    "build:android": "node scripts/android.js"
+    "dist": "electron-builder --win portable --x64 --publish=never"
   },
   "devDependencies": {
     "electron": "^32.0.0",
@@ -25,14 +24,9 @@
     ],
     "win": {
       "target": [
-        "nsis",
         "portable"
       ],
       "icon": "build/icon.png"
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
     }
   }
 }
