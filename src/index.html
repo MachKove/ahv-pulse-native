@@ -1,12 +1,77 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AHV PULSE</title><style>body{background:#050A1F;color:#fff;font-family:system-ui;margin:0;padding:24px;text-align:center}
-.logo{width:320px;max-width:90%;filter:drop-shadow(0 0 18px rgba(124,58,237,.9)) drop-shadow(0 0 32px rgba(37,99,235,.7))}
-.card{background:#0B1533;border:1px solid #2A3A6A;border-radius:16px;padding:20px;margin:14px auto;max-width:560px;text-align:left}
-a{color:#A78BFA}.btn{display:block;background:linear-gradient(90deg,#7C3AED,#2563EB);color:#fff;text-decoration:none;padding:14px;border-radius:12px;text-align:center;font-weight:700;margin-top:12px}
-small{color:#9AA3C7}</style></head><body>
-<img class="logo" src="icon.png" alt="AHV PULSE"><p>Beating at the Heart of Innovation</p>
-<div class="card"><h2>AHV PULSE AI Gateway</h2><p>Playground, routing, FreeLLMAPI + Paid + Local</p><a class="btn" href="https://ai.meta.com">Open Gateway (live web app)</a><small>Gateway is served from your live Hub link — replace this URL in src/index.html with your Gateway deployment link.</small></div>
-<div class="card"><h2>Windows Install Checklist</h2><p>6 phases to install FreeLLMAPI on Windows</p><a class="btn" href="#">Open Checklist</a></div>
-<div class="card"><h2>Platform Pitch</h2><p>Architecture, routing rules, cost $130-$380 vs $1,500+</p><a class="btn" href="#">Open Pitch</a></div>
-<div class="card"><h2>Native Wrapper</h2><p>This IS the native app. Windows .exe via Tauri. Android .apk via Capacitor.</p></div>
-<p><small>AHV PULSE • Sensitive data: Paid Only / Local — never free tiers.</small></p></body></html>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AHV PULSE</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,Arial;background:#050A1F;color:#fff}
+header{position:sticky;top:0;display:flex;align-items:center;gap:12px;padding:12px 16px;background:#0A1230;border-bottom:1px solid #2a3a7a;z-index:10}
+#burger{font-size:26px;background:#1a2a6a;color:#fff;border:0;border-radius:10px;width:48px;height:48px;cursor:pointer}
+.logo{font-weight:900;font-size:22px;letter-spacing:.5px}.logo span{color:#7C3AED}.logo b{color:#2563EB}
+.tag{font-size:12px;opacity:.8}
+nav{display:none;background:#0A1230;border-bottom:1px solid #2a3a7a;padding:12px 16px}
+nav.open{display:block}
+nav button{display:block;width:100%;text-align:left;margin:6px 0;padding:12px;border-radius:12px;border:1px solid #334155;background:#111C4A;color:#fff;font-size:16px;cursor:pointer}
+nav button.active{background:#7C3AED}
+main{padding:20px;max-width:900px;margin:0 auto}
+.card{background:#111C4A;border:1px solid #334155;border-radius:18px;padding:20px;margin:14px 0}
+.card h2{margin:0 0 8px}.btn{display:inline-block;margin:6px 6px 0 0;padding:12px 18px;border-radius:12px;background:#2563EB;color:#fff;border:0;font-size:16px;cursor:pointer}
+.btn.purple{background:#7C3AED}.btn.green{background:#16a34a}
+input,select{width:100%;padding:12px;border-radius:12px;border:1px solid #334155;background:#0A1230;color:#fff;margin:6px 0}
+.page{display:none}.page.show{display:block}
+.check{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #223}
+.check input{width:22px;height:22px;margin-top:2px}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:12px}.kpi div{background:#0A1230;border:1px solid #334155;border-radius:14px;padding:14px;text-align:center}
+.kpi b{font-size:26px;display:block}
+small{opacity:.75}
+</style></head><body>
+<header><button id="burger" onclick="toggleMenu()">☰</button><div><div class="logo">AHV <span>PULSE</span></div><div class="tag">Beating at the Heart of Innovation</div></div></header>
+<nav id="menu">
+<button data-page="gateway" onclick="show('gateway',this)">🏠 Gateway — Home</button>
+<button data-page="checklist" onclick="show('checklist',this)">✅ Windows Install Checklist</button>
+<button data-page="pitch" onclick="show('pitch',this)">📊 Platform Pitch</button>
+<button data-page="hub" onclick="show('hub',this)">🧭 Projects Hub</button>
+</nav>
+<main>
+<section id="gateway" class="page show">
+<div class="card"><h2>Welcome to AHV PULSE</h2><p>Your AI Gateway. Everything runs <b>inside this app</b> — no external links, no browser redirect.</p>
+<div class="kpi"><div><b>4</b><small>Projects</small></div><div><b>100%</b><small>Offline Ready</small></div></div></div>
+<div class="card"><h2>Ask AHV PULSE</h2><p><small>Type a question, tap Send. This is a local demo brain — connect FreeLLMAPI later for live AI.</small></p>
+<input id="q" placeholder="e.g. How do I install FreeLLMAPI?"><button class="btn purple" onclick="ask()">Send</button><p id="a"></p></div>
+<div class="card"><h2>Quick links — inside the app</h2><button class="btn" onclick="show('checklist')">Open Checklist →</button><button class="btn purple" onclick="show('pitch')">Open Pitch →</button><button class="btn green" onclick="show('hub')">Open Hub →</button></div>
+</section>
+<section id="checklist" class="page">
+<div class="card"><h2>Windows Install Checklist — FreeLLMAPI</h2><p id="progress">Progress: 0 / 6</p>
+<div class="check"><input type="checkbox" onchange="upd()"><div><b>1. Install Node.js 22</b><br><small>nodejs.org → LTS → Restart PC</small></div></div>
+<div class="check"><input type="checkbox" onchange="upd()"><div><b>2. Install Python 3.11+</b><br><small>Tick “Add to PATH” during install</small></div></div>
+<div class="check"><input type="checkbox" onchange="upd()"><div><b>3. Install Git</b><br><small>git-scm.com → default options</small></div></div>
+<div class="check"><input type="checkbox" onchange="upd()"><div><b>4. Install VS Code</b><br><small>code.visualstudio.com</small></div></div>
+<div class="check"><input type="checkbox" onchange="upd()"><div><b>5. Clone / Open AHV PULSE</b><br><small>Your ahv-pulse-native folder</small></div></div>
+<div class="check"><input type="checkbox" onchange="upd()"><div><b>6. Run: npm install → npm run dist</b><br><small>Builds AHV PULSE 1.0.0.exe in dist/</small></div></div>
+<button class="btn green" onclick="show('gateway')">← Back to Gateway</button></div>
+</section>
+<section id="pitch" class="page">
+<div class="card"><h2>AHV PULSE AI Platform</h2><p>One Gateway. Free models. Windows + Android.</p><div class="kpi"><div><b>FreeLLMAPI</b><small>Central AI Engine</small></div><div><b>Electron + Capacitor</b><small>Windows + Android</small></div></div></div>
+<div class="card"><h2>How it works</h2><p>1. User asks in Gateway → 2. Gateway routes to FreeLLMAPI → 3. Free model answers → 4. Answer shows in app. No paid API needed to start.</p></div>
+<div class="card"><h2>Projects</h2><p>Gateway • Checklist • Pitch • Hub — all in this one app.</p><button class="btn" onclick="show('gateway')">Back to Gateway</button></div>
+</section>
+<section id="hub" class="page">
+<div class="card"><h2>Projects Hub</h2><p>All AHV PULSE projects in one place.</p>
+<button class="btn" onclick="show('gateway')">Gateway</button><button class="btn purple" onclick="show('checklist')">Checklist</button><button class="btn green" onclick="show('pitch')">Pitch</button>
+<p><small>No external links — every button stays inside the app.</small></p></div>
+</section>
+</main>
+<script>
+function toggleMenu(){document.getElementById('menu').classList.toggle('open')}
+function show(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.getElementById('menu').classList.remove('open');
+  window.scrollTo(0,0);
+}
+function upd(){var c=document.querySelectorAll('#checklist input:checked').length;document.getElementById('progress').textContent='Progress: '+c+' / 6';}
+function ask(){var q=document.getElementById('q').value||'';var a=document.getElementById('a');
+ if(!q){a.textContent='Type a question first.';return;}
+ if(q.toLowerCase().includes('install')) a.textContent='Install order: Node.js 22 → Python → Git → VS Code → npm install → npm run dist. See Checklist page.';
+ else if(q.toLowerCase().includes('freellm')) a.textContent='FreeLLMAPI is the central AI engine for AHV PULSE. Start with the Checklist, then connect your FreeLLMAPI key in the Gateway later.';
+ else a.textContent='Got it: "'+q+'". This demo brain is local. In the full version this goes to FreeLLMAPI and answers here.';
+}
+</script></body></html>
