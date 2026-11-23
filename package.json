@@ -1,0 +1,9 @@
+{
+  "name": "ahv-pulse",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "tauri": "tauri",
+    "build": "tauri build"
+  }
+}
